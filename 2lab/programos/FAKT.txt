@@ -1,0 +1,28 @@
+; FAKT - faktorialas n! (ciklas; nuo 13! įvyksta perpildymas PI=4)
+$DATA
+DB n =       ; 00  "n = "
+DB $         ; 01
+DB n! =      ; 02  "n! = "
+DB  $        ; 03
+DW 1         ; 04  konstanta 1
+DW           ; 05  n
+DW 1         ; 06  rezultatas
+$CODE
+PD00         ; 80
+GN05         ; 81  n
+LR04         ; 82
+SR06         ; 83  rez := 1
+LR05         ; 84  ciklas
+CM04         ; 85  n ? 1
+JG88         ; 86  jei n > 1 - tęsti
+JM8F         ; 87  kitaip - spausdinti
+LR06         ; 88  rez := rez * n
+MU05         ; 89
+SR06         ; 8A
+LR05         ; 8B  n := n - 1
+SU04         ; 8C
+SR05         ; 8D
+JM84         ; 8E
+PD02         ; 8F  "n! = "
+PN06         ; 90
+HALT         ; 91

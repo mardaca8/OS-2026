@@ -1,0 +1,24 @@
+; SKAI - nuskaito du skaičius, išveda sumą ir sandaugą, paleidžia MAXI
+$DATA
+DB Suma      ; 00
+DB : $       ; 01
+DB Sand      ; 02
+DB auga      ; 03
+DB : $       ; 04
+DB MAXI      ; 05  paleidžiamos programos vardas
+DW           ; 06  rezultatas
+$CODE
+GNF0         ; 80  pirmas skaičius -> F0
+GNF1         ; 81  antras skaičius -> F1
+LRF0         ; 82
+ADF1         ; 83  R := F0 + F1
+SR06         ; 84
+PD00         ; 85  "Suma: "
+PN06         ; 86
+LRF0         ; 87
+MUF1         ; 88  R := F0 * F1
+SR06         ; 89
+PD02         ; 8A  "Sandauga: "
+PN06         ; 8B
+RN05         ; 8C  paleisti MAXI (perduodamas F blokas)
+HALT         ; 8D

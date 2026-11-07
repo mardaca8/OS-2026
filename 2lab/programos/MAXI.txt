@@ -1,0 +1,14 @@
+; MAXI - parametrus randa F bloke ir išveda didesnį skaičių
+$DATA
+DB Dide      ; 00
+DB snis      ; 01
+DB : $       ; 02
+$CODE
+PD00         ; 80  "Didesnis: "
+LRF0         ; 81
+CMF1         ; 82  palyginti F0 su F1
+JG86         ; 83  jei F0 > F1
+PNF1         ; 84
+HALT         ; 85
+PNF0         ; 86
+HALT         ; 87

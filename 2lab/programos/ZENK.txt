@@ -1,0 +1,31 @@
+; ZENK - skaičiaus ženklas; kartoja, kol įvedamas 0
+$DATA
+DB Skai      ; 00  "Skaicius: "
+DB cius      ; 01
+DB : $       ; 02
+DB Neig      ; 03  "Neigiamas: "
+DB iama      ; 04
+DB s: $      ; 05
+DB Nuli      ; 06  "Nulis: "
+DB s: $      ; 07
+DB Teig      ; 08  "Teigiamas: "
+DB iama      ; 09
+DB s: $      ; 0A
+DW 0         ; 0B
+DW           ; 0C  x
+$CODE
+PD00         ; 80  ciklas
+GN0C         ; 81
+LR0C         ; 82
+CM0B         ; 83  x ? 0
+JN88         ; 84  ne nulis -> tikrinti ženklą
+PD06         ; 85  "Nulis: "
+PN0C         ; 86
+HALT         ; 87
+JL8C         ; 88  x < 0 -> neigiamas
+PD08         ; 89  "Teigiamas: "
+PN0C         ; 8A
+JM80         ; 8B
+PD03         ; 8C  "Neigiamas: "
+PN0C         ; 8D
+JM80         ; 8E

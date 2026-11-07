@@ -1,0 +1,66 @@
+; KALK - skaičiuotuvas: a (op) b, rezultatas tampa nauju a. Operacija 0 - pabaiga
+$DATA
+DB Pirm      ; 00  "Pirmas: "
+DB as:       ; 01
+DB $         ; 02
+DB Op (      ; 03  "Op (1+,2-,3*,4/,0-pab): "
+DB 1+,2      ; 04
+DB -,3*      ; 05
+DB ,4/,      ; 06
+DB 0-pa      ; 07
+DB b):       ; 08
+DB $         ; 09
+DB Antr      ; 0A  "Antras: "
+DB as:       ; 0B
+DB $         ; 0C
+DB Rezu      ; 0D  "Rezultatas: "
+DB ltat      ; 0E
+DB as:       ; 0F
+DB $         ; 10
+DB Viso      ; 11  "Viso!"
+DB !$        ; 12
+DW 0         ; 13  konstantos
+DW 1         ; 14
+DW 2         ; 15
+DW 3         ; 16
+DW 4         ; 17
+DW           ; 18  a (rezultatas)
+DW           ; 19  operacija
+DW           ; 1A  b
+$CODE
+PD00         ; 80  "Pirmas: "
+GN18         ; 81
+PD03         ; 82  ciklas: "Op (...): "
+GN19         ; 83
+LR19         ; 84
+CM13         ; 85  operacija == 0 ?
+JEA2         ; 86  -> pabaiga
+PD0A         ; 87  "Antras: "
+GN1A         ; 88
+LR19         ; 89
+CM14         ; 8A
+JE93         ; 8B  1 -> sudėtis
+CM15         ; 8C
+JE96         ; 8D  2 -> atimtis
+CM16         ; 8E
+JE99         ; 8F  3 -> daugyba
+CM17         ; 90
+JE9C         ; 91  4 -> dalyba
+JM82         ; 92  nežinoma operacija - klausti iš naujo
+LR18         ; 93  sudėtis
+AD1A         ; 94
+JM9E         ; 95
+LR18         ; 96  atimtis
+SU1A         ; 97
+JM9E         ; 98
+LR18         ; 99  daugyba
+MU1A         ; 9A
+JM9E         ; 9B
+LR18         ; 9C  dalyba
+DV1A         ; 9D
+SR18         ; 9E  a := R
+PD0D         ; 9F  "Rezultatas: "
+PN18         ; A0
+JM82         ; A1  kartoti
+PD11         ; A2  pabaiga: "Viso!"
+HALT         ; A3
